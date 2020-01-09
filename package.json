@@ -1,0 +1,27 @@
+{
+  "name": "gatekeeper",
+  "version": "0.0.1",
+  "description": "handles auth",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Julius Pedersen",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-http-proxy": "^1.6.0",
+    "jwt-decode": "^2.2.0",
+    "nanoid": "^2.1.8",
+    "query-string": "^6.9.0",
+    "redis": "^2.8.0",
+    "urljoin": "^0.1.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
