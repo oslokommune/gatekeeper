@@ -1,6 +1,6 @@
 NAME=`cat package.json | jq .name | cut -d"\"" -f2`
 VERSION=`cat package.json | jq .version | cut -d"\"" -f2`
-REPOSITORY=registry.develish.net
+REPOSITORY=container-registry.oslo.kommune.no
 
 run:
 	nodemon server.js
@@ -29,7 +29,7 @@ build:
 		--tag ${REPOSITORY}/${NAME}:${VERSION} .
 
 run-in-docker:
-	docker stop gatekeeper || true
+	docker stop ${NAME} || true
 	docker run \
 		-d -p 4554:4554 \
 		--name ${NAME} \
@@ -37,8 +37,8 @@ run-in-docker:
 		${REPOSITORY}/${NAME}:${VERSION}
 
 clean:
-	@rm -rf node_modules
-	@rm -rf sslcert
+	@rm -rf node_modules || true
+	@rm -rf sslcert || true
 
 test:
 	snyk test
