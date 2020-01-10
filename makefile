@@ -41,4 +41,4 @@ clean:
 	@rm -rf sslcert || true
 
 test:
-	snyk test
+	npm run test
