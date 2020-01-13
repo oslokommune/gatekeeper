@@ -2,14 +2,28 @@ NAME=`cat package.json | jq .name | cut -d"\"" -f2`
 VERSION=`cat package.json | jq .version | cut -d"\"" -f2`
 REPOSITORY=container-registry.oslo.kommune.no
 
-run:
+help: ## Print this menu
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+build: ## Build Docker image
+	docker build \
+		--tag ${REPOSITORY}/${NAME}:${VERSION} .
+
+run: ## Run the Gatekeeper locally
 	nodemon server.js
 
-certs:
-	mkdir sslcerts
-	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout sslcerts/server.key -out sslcerts/server.crt
+run-in-docker: ## Run the Gatekeeper in Docker
+	docker stop ${NAME} || true
+	docker run \
+		-d -p 4554:4554 \
+		--name ${NAME} \
+		--env-file .env-docker \
+		${REPOSITORY}/${NAME}:${VERSION}
 
-generate-dotenv-file:
+test: ## Run tests
+	npm run test
+
+generate-dotenv-file: ## Generate .env file template
 	echo "BASE_URL=" >> .env
 	echo "CLIENT_ID=" >> .env
 	echo "CLIENT_SECRET=" >> .env
@@ -24,21 +38,5 @@ generate-dotenv-file:
 	echo "CERTIFICATE_FILE=#optional" >> .env
 	echo "KEY_FILE=#optional" >> .env
 
-build:
-	docker build \
-		--tag ${REPOSITORY}/${NAME}:${VERSION} .
-
-run-in-docker:
-	docker stop ${NAME} || true
-	docker run \
-		-d -p 4554:4554 \
-		--name ${NAME} \
-		--env-file .env-docker \
-		${REPOSITORY}/${NAME}:${VERSION}
-
-clean:
+clean: ## Clean up project directory
 	@rm -rf node_modules || true
-	@rm -rf sslcert || true
-
-test:
-	npm run test
