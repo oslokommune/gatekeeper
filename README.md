@@ -22,7 +22,6 @@
   </p>
 </p>
 
-
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
@@ -37,11 +36,26 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About the project
-This Gatekeeper tries to simplify authentication on an OAuth2 OIDC provider with a web application by implementing 
-a few defaults
-* Redirects your client to the auth providers /authorize endpoint with needed variables set
-* Sets the access token and refresh token as HttpsOnly cookies on the response to the client 
-* Exposes a proxy entrypoint to translate a HttpsOnly cookie into an Authorization header
+The Gatekeeper is a tool made to simplify authentication against an OAuth2 provider from a web application.
+
+After the Gatekeeper is configured using a minimalistic set of environment variables, all you need to do is make an anchor tag in your frontend that points to the Gatekeeper's /login endpoint and it will handle the rest. The end result is your frontend having the access token and refresh token set as Secure and HttpOnly cookies. To log out you simply POST to the Gatekeeper's /logout endpoint.
+
+If your backend service expects the access token as an authorization header, you can use the proxy functionality which handles setting the cookie as a header for you. Using the proxy functionality is required for refreshing the tokens for now.
+### Why
+
+* We are currently storing the access token and refresh token in both the local storage of the frontend, and as non-HttpOnly cookies. This is not recommended and is a security risk in the event of a XSS vulnerability
+* In the case of a single page application, the Gatekeeper can handle authentication in a security wise satisfactory way.
+* Authentication is decoupled from the frontend / client which will simplify maintenance and creation of new frontends / clients
+
+###How
+
+The Gatekeeper exposes following entrypoints:
+
+- /login?redirect= redirects the client to the auth provider's login screen and sets what location to redirect to on a successful login
+- /logout invalidates the refresh token in the auth provider and clears the clients access and refresh tokens from cookies
+- /api/* proxies requests to a configured backend service and sets the access token to a authorization header on the request. This also handles automatically refreshing of the access token. Use the UPSTREAMS environment variable to configure routes.
+- /callback used internally by the Gatekeeper and the auth provider in the Oauth2 auth code flow. Ignore this when integrating with the Gatekeeper
+
 
 ### Built With
 
@@ -57,14 +71,14 @@ To run Gatekeeper locally, follow these steps
 
 ### Prerequisites
 
-* NodeJS v12.13.0
+* NodeJS v12.14.1
 * NPM
 
 ### Installation
  
 1. Clone the repo
 ```sh
-git clone https://github.oslo.kommune.no/julius/gatekeeper
+git clone https://github.oslo.kommune.no/origodigi/gatekeeper
 ```
 2. Install NPM packages
 ```sh
@@ -81,7 +95,7 @@ npm install
 | CORS_ORIGINS                    | Origin(s) which the Gatekeeper should accept connections from                                           | https://awesome.com                                                              |
 | DISCOVERY_URL                   | OAuth2 OIDC Discovery URL                                                                               | https://keycloak.awesome.com/auth/realms/public/.well-known/openid-configuration |
 | ERROR_URL                       | An URL to redirect the client/user to on errors. Should accept status and message as url params         | https://awesome.com/error                                                        |
-| REDIS_URL                       | URI for your Redis instance                                                                             | redis://redis.awesome.com                                                        |
+| REDIS_URI                       | URI for your Redis instance                                                                             | redis://redis.awesome.com                                                        |
 | REDIS_PASSWORD                  | Password for your Redis instance                                                                        | secret                                                                           |
 | SUCCESSFUL_LOGIN_ORIGIN         | Whitelisted origin where the client can be redirected to on successful login                            | https://awesome.com                                                              |
 | SUCCESSFUL_LOGIN_PATHNAME_REGEX | Whitelisted pathname where the client can be redirected to on successful login                          | ^article/[0-9]$                                                                  |

@@ -30,7 +30,7 @@ generate-dotenv-file: ## Generate .env file template
 	echo "CORS_ORIGINS=" >> .env
 	echo "DISCOVERY_URL=" >> .env
 	echo "ERROR_URL=" >> .env
-	echo "REDIS_URL=" >> .env
+	echo "REDIS_URI=" >> .env
 	echo "REDIS_PASSWORD=#optional" >> .env
 	echo "SUCCESSFUL_LOGIN_ORIGIN=" >> .env
 	echo "SUCCESSFUL_LOGIN_PATHNAME_REGEX=# default: \/ aka '/'" >> .env
