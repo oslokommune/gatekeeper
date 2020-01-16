@@ -111,8 +111,10 @@ npm install
 make generate-dotenv-file
 ```
 2. Configure .env file
-3. Run the Gatekeeper
+
+3. Run the Gatekeeper 
 ```sh
+make start-redis
 make run
 ```
 

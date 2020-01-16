@@ -20,6 +20,9 @@ run-in-docker: ## Run the Gatekeeper in Docker
 		--env-file .env-docker \
 		${REPOSITORY}/${NAME}:${VERSION}
 
+start-redis: ## Start a Redis instance
+	docker run --rm -p 6379:6379 --name redis -d redis
+
 test: ## Run tests
 	npm run test
 
