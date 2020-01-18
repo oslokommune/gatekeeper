@@ -43,18 +43,18 @@ After the Gatekeeper is configured using a minimalistic set of environment varia
 If your backend service expects the access token as an authorization header, you can use the proxy functionality which handles setting the cookie as a header for you. Using the proxy functionality is required for refreshing the tokens for now.
 ### Why
 
-* We are currently storing the access token and refresh token in both the local storage of the frontend, and as non-HttpOnly cookies. This is not recommended and is a security risk in the event of a XSS vulnerability
+* We are currently storing the access token and refresh token in both the local storage of the frontend, and as non-HttpOnly cookies. This is not recommended and is a security risk in the event of a XSS vulnerability.
 * In the case of a single page application, the Gatekeeper can handle authentication in a security wise satisfactory way.
-* Authentication is decoupled from the frontend / client which will simplify maintenance and creation of new frontends / clients
+* Authentication is decoupled from the frontend / client which will simplify maintenance and creation of new frontends / clients.
 
-###How
+### How
 
 The Gatekeeper exposes following entrypoints:
 
 - /login?redirect= redirects the client to the auth provider's login screen and sets what location to redirect to on a successful login
-- /logout invalidates the refresh token in the auth provider and clears the clients access and refresh tokens from cookies
+- /logout invalidates the refresh token in the auth provider and clears the client's access and refresh tokens from cookies
 - /api/* proxies requests to a configured backend service and sets the access token to a authorization header on the request. This also handles automatically refreshing of the access token. Use the UPSTREAMS environment variable to configure routes.
-- /callback used internally by the Gatekeeper and the auth provider in the Oauth2 auth code flow. Ignore this when integrating with the Gatekeeper
+- /callback used internally by the Gatekeeper and the authorization provider in the Oauth2 authorization code flow. Ignore this when integrating with the Gatekeeper
 
 
 ### Built With
@@ -94,7 +94,7 @@ npm install
 | CLIENT_SECRET                   | Oauth2 Client secret                                                                                    | 0aadea6c-9e01-43e9-a584-8bb579f0cc43                                             |
 | CORS_ORIGINS                    | Configure the Access-Control-Allow-Origin header for the Gatekeeper. Should be your frontend origin     | https://awesome.com                                                              |
 | DISCOVERY_URL                   | OAuth2 OIDC Discovery URL                                                                               | https://keycloak.awesome.com/auth/realms/public/.well-known/openid-configuration |
-| ERROR_URL                       | An URL to redirect the client/user to on errors. Should accept status and message as url parameters     | https://awesome.com/error                                                        |
+| ERROR_URL                       | An URL to redirect the client/user to on errors. Should accept status and message as URL parameters     | https://awesome.com/error                                                        |
 | REDIS_URI                       | URI for your Redis instance                                                                             | redis://redis.awesome.com                                                        |
 | REDIS_PASSWORD                  | Password for your Redis instance                                                                        | secret                                                                           |
 | SUCCESSFUL_LOGIN_ORIGIN         | Whitelisted origin where the client can be redirected to on successful login                            | https://awesome.com                                                              |
