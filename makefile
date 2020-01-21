@@ -8,9 +8,14 @@ help: ## Print this menu
 build: ## Build Docker image
 	docker build \
 		--tag ${REPOSITORY}/${NAME}:${VERSION} .
+push-image:
+	docker push ${REPOSITORY}/${NAME}:${VERSION}
+deploy:
+	helm --tiller-namespace=developerportal-test --namespace=developerportal-test upgrade \
+	--install ${NAME} helm-charts
 
 run: ## Run the Gatekeeper locally
-	nodemon server.js
+	npm start nodemon server.js
 
 run-in-docker: ## Run the Gatekeeper in Docker
 	docker stop ${NAME} || true

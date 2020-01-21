@@ -72,7 +72,7 @@ To run Gatekeeper locally, follow these steps
 ### Prerequisites
 
 * NodeJS v12.14.1
-* NPM
+* NPM v6.13.6
 
 ### Installation
  
@@ -98,10 +98,12 @@ npm install
 | REDIS_URI                       | URI for your Redis instance                                                                             | redis://redis.awesome.com                                                        |
 | REDIS_PASSWORD                  | Password for your Redis instance                                                                        | secret                                                                           |
 | SUCCESSFUL_LOGIN_ORIGIN         | Whitelisted origin where the client can be redirected to on successful login                            | https://awesome.com                                                              |
-| SUCCESSFUL_LOGIN_PATHNAME_REGEX | Whitelisted pathname where the client can be redirected to on successful login                          | ^article/[0-9]$                                                                  |
+| SUCCESSFUL_LOGIN_PATHNAME_REGEX | Optional: Whitelisted pathname where the client can be redirected to on successful login                | ^article/[0-9]$                                                                  |
 | UPSTREAMS                       | Upstreams to redirect to on /api/*. Gatekeeper will turn a HttpOnly cookie into an Authorization bearer | articles=http://articles.service;writers=http://writers.service                  |
 | CERTIFICATE_FILE                | Optional: path to certificate file in case SSL termination is needed/wanted                             | /var/keys/server.crt                                                             |
 | KEY_FILE                        | Optional: Path to key file in case SSL termination is needed/wanted                                     | /var/keys/server.key                                                             |
+| TEST_USERNAME                   | The username used when running the integration tests against Keycloak                                   | testuser                                                                         |
+| TEST_PASSWORD                   | The password used when running the integration tests against Keycloak                                   | testpassword                                                                     |
 <!-- USAGE EXAMPLES -->
 
 ## Usage
