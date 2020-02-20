@@ -45,6 +45,8 @@ jobs:
         env:
           CI: true
 
+      - run: git checkout -b v$(npm view gatekeeper version)
+
       - name: Publish Docker image
         uses: elgohr/Publish-Docker-Github-Action@2.12
         with:
