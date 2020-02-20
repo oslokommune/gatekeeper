@@ -45,11 +45,11 @@ jobs:
           env:
             CI: true
 
-      - name: Publish Docker image
-        uses: elgohr/Publish-Docker-Github-Action@2.12
-        with:
-          # The name of the image you would like to push
-          name: oslokommune/gatekeeper/gatekeeper
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          registry: docker.pkg.github.com
+        - name: Publish Docker image
+          uses: elgohr/Publish-Docker-Github-Action@2.12
+          with:
+            # The name of the image you would like to push
+            name: oslokommune/gatekeeper/gatekeeper
+            username: ${{ github.actor }}
+            password: ${{ secrets.GITHUB_TOKEN }}
+            registry: docker.pkg.github.com
