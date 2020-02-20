@@ -15,7 +15,7 @@ deploy:
 	--install ${NAME} helm-charts
 
 run: ## Run the Gatekeeper locally
-	npm start nodemon server.js
+	npx nodemon server.js
 
 run-in-docker: ## Run the Gatekeeper in Docker
 	docker stop ${NAME} || true
