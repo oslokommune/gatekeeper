@@ -1,5 +1,3 @@
-// docker.pkg.github.com
-
 name: Pipeline
 
 on: [push]
