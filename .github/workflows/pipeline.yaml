@@ -3,35 +3,38 @@ name: Pipeline
 on: [push]
 
 jobs:
-  bump:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1 # Fetch code
-        with:
-          ref: ${{ github.ref }}
-      - name: "Automated Version Bump"
-        uses: "phips28/gh-action-bump-version@master"
-        with:
-          tag-prefix: ''
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  test:
-    needs: bump
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 12
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-      - run: npm install
-      - run: npm test
-        env:
-          CI: true
+#  bump:
+#    name: Bump version
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v1 # Fetch code
+#        with:
+#          ref: ${{ github.ref }}
+#      - name: "Automated Version Bump"
+#        uses: "phips28/gh-action-bump-version@master"
+#        with:
+#          tag-prefix: ''
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#  test:
+#    name: Run tests
+#    needs: bump
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Use Node.js 12
+#        uses: actions/setup-node@v1
+#        with:
+#          node-version: '12.x'
+#      - run: npm install
+#      - run: npm test
+#        env:
+#          CI: true
 
   publish:
+    name: Publish Docker image
     needs: test
     runs-on: ubuntu-latest
 
@@ -45,7 +48,7 @@ jobs:
         env:
           CI: true
 
-      - run: git checkout -b v$(npm view gatekeeper version)
+      - run: export RELEASE_VERSION=$(npm view gatekeeper version)
 
       - name: Publish Docker image
         uses: elgohr/Publish-Docker-Github-Action@2.12
@@ -55,4 +58,4 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          tag_names: true
+          tags: latest,${{ env.RELEASE_VERSION }}
