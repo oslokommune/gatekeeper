@@ -48,9 +48,9 @@ jobs:
         env:
           CI: true
 
-      - run: export RELEASE_VERSION=$(npm view gatekeeper version)
-
       - name: Publish Docker image
+        env:
+          RELEASE_VERSION: v$(npm view gatekeeper version)
         uses: elgohr/Publish-Docker-Github-Action@2.12
         with:
           # The name of the image you would like to push
