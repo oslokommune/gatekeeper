@@ -3,7 +3,7 @@ name: Pipeline
 on: [push]
 
 jobs:
-  'Bump version':
+  bump:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1 # Fetch code
@@ -16,7 +16,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  'Run tests':
+  test:
     needs: bump
     runs-on: ubuntu-latest
 
@@ -31,7 +31,7 @@ jobs:
         env:
           CI: true
 
-  'Publish Docker image':
+  publish:
     needs: test
     runs-on: ubuntu-latest
 
