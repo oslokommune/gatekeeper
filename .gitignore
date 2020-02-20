@@ -1,0 +1,10 @@
+# Folders
+/.idea/
+/node_modules/
+/sslcerts/
+
+# Auto generated files
+.swp
+
+# Sensitive files
+.env*
