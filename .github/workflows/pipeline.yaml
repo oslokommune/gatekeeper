@@ -1,0 +1,59 @@
+name: Pipeline
+
+on:
+  push:
+    branches: master
+
+jobs:
+  bump:
+    name: Bump version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1 # Fetch code
+        with:
+          ref: ${{ github.ref }}
+      - name: "Automated Version Bump"
+        uses: "phips28/gh-action-bump-version@master"
+        with:
+          tag-prefix: ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  test:
+    name: Run tests
+    needs: bump
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - run: npm ci
+      - run: npm test
+
+  publish:
+    name: Publish Docker image
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - run: npm ci
+
+      - run: echo "::set-env name=RELEASE_VERSION::$(npm view gatekeeper version)"
+
+      - name: Publish Docker image
+        uses: elgohr/Publish-Docker-Github-Action@2.12
+        with:
+          # The name of the image you would like to push
+          name: oslokommune/gatekeeper/gatekeeper
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          tags: latest,${{ env.RELEASE_VERSION }}
