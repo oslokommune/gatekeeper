@@ -6,13 +6,24 @@ help: ## Print this menu
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 build: ## Build Docker image
+	@echo "🏗 Building ${REPOSITORY}/${NAME}:${VERSION}"
 	docker build \
 		--tag ${REPOSITORY}/${NAME}:${VERSION} .
+	@echo "👷‍ ‍Build complete"
+
 push-image:
+	@echo "🚚 Pushing image to ${REPOSITORY}"
 	docker push ${REPOSITORY}/${NAME}:${VERSION}
+	@echo "🛬 Push complete"
+
+release: build push-image
+	@echo "🚀 Release successfully built. We are ready to deploy"
+
 deploy:
 	helm --tiller-namespace=developerportal-test --namespace=developerportal-test upgrade \
-	--install ${NAME} helm-charts
+		--set environment=test \
+		--set app.image.tag=${VERSION} \
+		--install ${NAME} helm-charts/gatekeeper
 
 run: ## Run the Gatekeeper locally
 	npx nodemon server.js
