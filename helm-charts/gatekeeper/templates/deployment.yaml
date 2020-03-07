@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "dev-starter.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "dev-starter.name" . }}
+    helm.sh/chart: {{ include "dev-starter.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "dev-starter.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "dev-starter.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        {{- if .Values.ingress.enabled }}
+        ingress: enabled
+        {{- end }}
+        loggingEnabled: {{ .Values.podLabels.loggingEnabled | squote }}
+        prometheus: {{ .Values.podLabels.prometheusEnabled | quote }}
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecret }}
+      containers:
+        - name: app
+          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.internalPort }}
+              protocol: TCP
+          env:
+            - name: BASE_URL
+              value: https://gatekeeper.k8s{{ template "with-environment" . }}.oslo.kommune.no
+            - name: CORS_ORIGINS
+              value: https://apis.k8s{{ template "with-environment" . }}.oslo.kommune.no
+            - name: DISCOVERY_URL
+              value: https://login{{ template "with-environment" . }}.oslo.kommune.no/auth/realms/api-catalog/.well-known/openid-configuration
+            - name: SUCCESSFUL_LOGIN_ORIGIN
+              value: https://apis.k8s{{ template "with-environment" . }}.oslo.kommune.no
+            - name: UPSTREAMS
+              value: api-catalog=https://api-catalog.k8s{{ template "with-environment" . }}.oslo.kommune.no
+            - name: ERROR_URL
+              value: https://apis.k8s{{ template "with-environment" . }}.oslo.kommune.no/error
+          {{- with .Values.app.env }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.app.livenessProbe.path }}
+              port: {{ .Values.service.internalPort }}
+            failureThreshold: {{ .Values.app.livenessProbe.failureThreshold }}
+            initialDelaySeconds: {{ .Values.app.livenessProbe.initialDelaySeconds }}
+            timeoutSeconds: {{ .Values.app.livenessProbe.timeoutSeconds }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.app.readinessProbe.path }}
+              port: {{ .Values.service.internalPort }}
+            failureThreshold: {{ .Values.app.readinessProbe.failureThreshold }}
+            initialDelaySeconds: {{ .Values.app.readinessProbe.initialDelaySeconds }}
+            timeoutSeconds: {{ .Values.app.readinessProbe.timeoutSeconds }}
+          {{- with .Values.app.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.app.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+        - name: asas
+        {{- toYaml . | nindent 8}}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
