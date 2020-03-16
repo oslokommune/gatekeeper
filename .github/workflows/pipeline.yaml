@@ -46,7 +46,7 @@ jobs:
           node-version: '12.x'
       - run: npm ci
 
-      - run: echo "::set-env name=RELEASE_VERSION::$(npm view gatekeeper version)"
+      - run: echo "::set-env name=RELEASE_VERSION::$(cat package.json | jq -r .version)"
 
       - name: Publish Docker image
         uses: elgohr/Publish-Docker-Github-Action@2.12
