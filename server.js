@@ -23,8 +23,8 @@ if (process.env.CERTIFICATE_FILE || process.env.KEY_FILE) {
 			key: privateKey, cert: certificate
 		}
 	} catch(error) {
-		log.e('Unable to read key or certificate')
-		log.e(error)
+		log.error('Unable to read key or certificate')
+		log.error(error)
 
 		return
 	}
@@ -45,7 +45,7 @@ App()
 		}
 
 		server.listen(PORT, () => {
-			log.v(`Listening on ${protocol}://0.0.0.0:${PORT}`)
+			log.verbose(`Listening on ${protocol}://0.0.0.0:${PORT}`)
 		})
 	})
 
