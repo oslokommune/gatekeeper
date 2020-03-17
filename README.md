@@ -87,23 +87,28 @@ npm install
 
 <!-- CONFIGURATION -->
 ## Configuration
-| Variable                        | Description                                                                                             | Example                                                                          |
-|---------------------------------|---------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
-| BASE_URL                        | URL which the Gatekeeper will be listening on                                                           | https://gatekeeper.awesome.com                                                   |
-| CLIENT_ID                       | OAuth2 Client ID                                                                                        | Gatekeeper                                                                       |
-| CLIENT_SECRET                   | Oauth2 Client secret                                                                                    | 0aadea6c-9e01-43e9-a584-8bb579f0cc43                                             |
-| CORS_ORIGINS                    | Configure the Access-Control-Allow-Origin header for the Gatekeeper. Should be your frontend origin     | https://awesome.com                                                              |
-| DISCOVERY_URL                   | OAuth2 OIDC Discovery URL                                                                               | https://keycloak.awesome.com/auth/realms/public/.well-known/openid-configuration |
-| ERROR_URL                       | An URL to redirect the client/user to on errors. Should accept status and message as URL parameters     | https://awesome.com/error                                                        |
-| REDIS_URI                       | URI for your Redis instance                                                                             | redis://redis.awesome.com                                                        |
-| REDIS_PASSWORD                  | Password for your Redis instance                                                                        | secret                                                                           |
-| SUCCESSFUL_LOGIN_ORIGIN         | Whitelisted origin where the client can be redirected to on successful login                            | https://awesome.com                                                              |
-| SUCCESSFUL_LOGIN_PATHNAME_REGEX | Optional: Whitelisted pathname where the client can be redirected to on successful login                | ^article/[0-9]$                                                                  |
-| UPSTREAMS                       | Upstreams to redirect to on /api/*. Gatekeeper will turn a HttpOnly cookie into an Authorization bearer | articles=http://articles.service;writers=http://writers.service                  |
-| CERTIFICATE_FILE                | Optional: path to certificate file in case SSL termination is needed/wanted                             | /var/keys/server.crt                                                             |
-| KEY_FILE                        | Optional: Path to key file in case SSL termination is needed/wanted                                     | /var/keys/server.key                                                             |
-| TEST_USERNAME                   | The username used when running the integration tests against Keycloak                                   | testuser                                                                         |
-| TEST_PASSWORD                   | The password used when running the integration tests against Keycloak                                   | testpassword                                                                     |
+### Mandatory
+| Variable                  | Example                                                                                                                                                              | Description                                                                                         |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| BASE_URL                  | [https://gatekeeper.awesome.com](https://gatekeeper.awesome.com)                                                                                                     | URL which the Gatekeeper will be listening on                                                       |
+| CLIENT_ID                 | Gatekeeper                                                                                                                                                           | OAuth2 Client ID                                                                                    |
+| CLIENT_SECRET             | 0aadea6c-9e01-43e9-a584-8bb579f0cc43                                                                                                                                 | Oauth2 Client secret                                                                                |
+| CORS_ORIGINS              | https://awesome.com;https://test.awesome.com                                                                                                                         | Configure the Access-Control-Allow-Origin header for the Gatekeeper. Should be your frontend origin |
+| DISCOVERY_URL             | [https://keycloak.awesome.com/auth/realms/public/.well-known/openid-configuration](https://keycloak.awesome.com/auth/realms/public/.well-known/openid-configuration) | OAuth2 OIDC Discovery URL                                                                           |
+| REDIS_URI                 | redis://redis.awesome.com                                                                                                                                            | URI for your Redis instance                                                                         |
+| SUCCESSFUL_LOGIN_ORIGIN   | [https://awesome.com](https://awesome.com)                                                                                                                           | Whitelisted origin where the client can be redirected to on successful login                        |
+
+### Optional
+| Variable                           | Example                                                         | Default | Description                                                                                                               |
+| ---------------------------------- | --------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| ERROR_URL                          | https://awesome.com/error                                       |         | An URL to redirect the client/user to on errors. Should accept status and message as URL parameters                       |
+| LOG_LEVEL                          | error                                                           | error   | How verbose logging should be. Log levels can be seen \[here\](https://github.com/winstonjs/winston#using-logging-levels) |
+| LOG_PRETTY_PRINT                   | true                                                            | false   | Pretty print json log output                                                                                              |
+| REDIS_PASSWORD                     | secret                                                          |         | Password for your Redis instance                                                                                          |
+| SUCCESSFUL_LOGIN_PATHNAME_REGEX    | ^article/\[0-9\]$                                               | /       | Whitelisted pathname where the client can be redirected to on successful login                                            |
+| UPSTREAMS                          | articles=http://articles.service;writers=http://writers.service |         | Upstreams to redirect to on /api/\*. Gatekeeper will turn a HttpOnly cookie into an Authorization bearer                  |
+| CERTIFICATE_FILE                   | /var/keys/server.crt                                            |         | path to certificate file in case SSL termination is needed/wanted                                                         |
+| KEY_FILE                           | /var/keys/server.key                                            |         | Path to key file in case SSL termination is needed/wanted                                                                 |
 <!-- USAGE EXAMPLES -->
 
 ## Usage
