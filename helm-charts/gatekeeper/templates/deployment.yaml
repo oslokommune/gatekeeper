@@ -44,7 +44,7 @@ spec:
             - name: SUCCESSFUL_LOGIN_ORIGIN
               value: https://apis.k8s{{ template "with-environment" . }}.oslo.kommune.no
             - name: UPSTREAMS
-              value: api-catalog=https://api-catalog.k8s{{ template "with-environment" . }}.oslo.kommune.no
+              value: api-catalog=https://api-catalog.k8s{{ template "with-environment" . }}.oslo.kommune.no;data=https://api.data-dev.oslo.systems;teams=https://devportal-teams.k8s{{ template "with-environment" . }}.oslo.kommune.no
             - name: ERROR_URL
               value: https://apis.k8s{{ template "with-environment" . }}.oslo.kommune.no/error
           {{- with .Values.app.env }}
