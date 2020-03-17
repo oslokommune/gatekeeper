@@ -14,11 +14,11 @@ podLabels:
   # it will also create a rule for the ingress that tell it to block external access
   prometheusEnabled: false
 
-imagePullSecret: regsecret
+imagePullSecret: githubpackages
 
 app:
   image:
-    repository: container-registry.oslo.kommune.no/gatekeeper
+    repository: docker.pkg.github.com/oslokommune/gatekeeper/gatekeeper
     pullPolicy: Always
   resources:
     limits:
