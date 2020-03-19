@@ -19,11 +19,15 @@ push-image:
 release: build push-image
 	@echo "🚀 Release successfully built. We are ready to deploy"
 
-deploy:
+deploy-test:
 	helm --tiller-namespace=developerportal-test --namespace=developerportal-test upgrade \
-		--set environment=test \
 		--set app.image.tag=${VERSION} \
+		--values helm-charts/gatekeeper/values-test.yaml \
 		--install ${NAME} helm-charts/gatekeeper
+deploy-production:
+	helm --tiller-namespace=developerportal --namespace=developerportal upgrade \
+		--set app.image.tag=${VERSION} \
+
 
 run: ## Run the Gatekeeper locally
 	npx nodemon server.js

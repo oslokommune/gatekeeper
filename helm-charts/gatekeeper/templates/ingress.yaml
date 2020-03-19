@@ -23,17 +23,22 @@ metadata:
     {{- end }}
   {{- end }}
 spec:
-    {{- if and .Values.ingress.tls (eq .Values.ingress.tls true) }}
+  {{- if and .Values.ingress.tls (eq .Values.ingress.tls true) }}
   tls:
     - hosts:
-        - {{ .Values.ingress.host.subdomain }}.k8s{{ template "with-environment" . }}.oslo.kommune.no
+        {{- range .Values.ingress.hosts }}
+        - {{ . | quote }}
+          {{- end }}
+  {{- end }}
   rules:
-    - host: {{ .Values.ingress.host.subdomain }}.k8s{{ template "with-environment" . }}.oslo.kommune.no
+    {{- $externalPort := .Values.service.externalPort }}
+    {{- range .Values.ingress.hosts }}
+    - host: {{ . | quote }}
       http:
         paths:
           - path: /
             backend:
               serviceName: {{ $fullName }}
-              servicePort: {{ .Values.service.externalPort }}
-    {{- end}}
-{{- end}}
+              servicePort: {{ $externalPort }}
+    {{- end }}
+  {{- end }}
