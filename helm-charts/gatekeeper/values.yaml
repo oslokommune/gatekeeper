@@ -19,6 +19,7 @@ imagePullSecret: githubpackages
 app:
   image:
     repository: docker.pkg.github.com/oslokommune/gatekeeper/gatekeeper
+    tag: latest
     pullPolicy: Always
   resources:
     limits:
@@ -50,6 +51,18 @@ app:
         secretKeyRef:
           name: gatekeeper-client-secret
           key: password.txt
+    - name: BASE_URL
+      value: https://gatekeeper.k8s.oslo.kommune.no
+    - name: CORS_ORIGINS
+      value: https://apis.k8s.oslo.kommune.no
+    - name: DISCOVERY_URL
+      value: https://login.oslo.kommune.no/auth/realms/api-catalog/.well-known/openid-configuration
+    - name: SUCCESSFUL_LOGIN_ORIGIN
+      value: https://apis.k8s.oslo.kommune.no
+    - name: UPSTREAMS
+      value: api-catalog=https://api-catalog.k8s.oslo.kommune.no;data=https://api.data-dev.oslo.systems;teams=https://devportal-teams.k8s.oslo.kommune.no
+    - name: ERROR_URL
+      value: https://apis.k8s.oslo.kommune.no/error
     - name: REDIS_URI
       value: redis://dp-redis:6379
 

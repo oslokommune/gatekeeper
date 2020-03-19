@@ -35,18 +35,6 @@ spec:
               containerPort: {{ .Values.service.internalPort }}
               protocol: TCP
           env:
-            - name: BASE_URL
-              value: https://gatekeeper.k8s{{ template "with-environment" . }}.oslo.kommune.no
-            - name: CORS_ORIGINS
-              value: https://apis.k8s{{ template "with-environment" . }}.oslo.kommune.no
-            - name: DISCOVERY_URL
-              value: https://login{{ template "with-environment" . }}.oslo.kommune.no/auth/realms/api-catalog/.well-known/openid-configuration
-            - name: SUCCESSFUL_LOGIN_ORIGIN
-              value: https://apis.k8s{{ template "with-environment" . }}.oslo.kommune.no
-            - name: UPSTREAMS
-              value: api-catalog=https://api-catalog.k8s{{ template "with-environment" . }}.oslo.kommune.no;data=https://api.data-dev.oslo.systems;teams=https://devportal-teams.k8s{{ template "with-environment" . }}.oslo.kommune.no
-            - name: ERROR_URL
-              value: https://apis.k8s{{ template "with-environment" . }}.oslo.kommune.no/error
           {{- with .Values.app.env }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
