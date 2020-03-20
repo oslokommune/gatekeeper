@@ -1,6 +1,6 @@
-NAME=`cat package.json | jq .name | cut -d"\"" -f2`
-VERSION=`cat package.json | jq .version | cut -d"\"" -f2`
-REPOSITORY=container-registry.oslo.kommune.no
+NAME ?= `jq -r .name package.json`
+VERSION ?= `jq -r .version package.json`
+REPOSITORY ?= container-registry.oslo.kommune.no
 
 help: ## Print this menu
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -11,7 +11,7 @@ build: ## Build Docker image
 		--tag ${REPOSITORY}/${NAME}:${VERSION} .
 	@echo "👷‍ ‍Build complete"
 
-push-image:
+push-image: ## Push image ${REPOSITORY}
 	@echo "🚚 Pushing image to ${REPOSITORY}"
 	docker push ${REPOSITORY}/${NAME}:${VERSION}
 	@echo "🛬 Push complete"
@@ -19,14 +19,27 @@ push-image:
 release: build push-image
 	@echo "🚀 Release successfully built. We are ready to deploy"
 
+deploy-temp:
+	helm --tiller-namespace=developerportal-test --namespace=developerportal-test upgrade \
+		--install \
+		--set app.image.tag=${VERSION} \
+		--set app.image.repository=${REPOSITORY}/${NAME} \
+		--set imagePullSecret=regsecret \
+		--set 'ingress.hosts={gatekeeper-${VERSION}.k8s-test.oslo.kommune.no,gatekeeper-${VERSION}.api-test.oslo.kommune.no}' \
+		--values helm-charts/gatekeeper/values-test.yaml \
+		$(NAME)-${VERSION} helm-charts/gatekeeper
+
 deploy-test:
 	helm --tiller-namespace=developerportal-test --namespace=developerportal-test upgrade \
+		--install \
 		--set app.image.tag=${VERSION} \
 		--values helm-charts/gatekeeper/values-test.yaml \
-		--install ${NAME} helm-charts/gatekeeper
+		${NAME} helm-charts/gatekeeper
 deploy-production:
 	helm --tiller-namespace=developerportal --namespace=developerportal upgrade \
+		--install \
 		--set app.image.tag=${VERSION} \
+		${NAME} helm-charts/gatekeeper
 
 
 run: ## Run the Gatekeeper locally
