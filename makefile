@@ -50,14 +50,18 @@ generate-dotenv-file: ## Generate .env file template
 	echo "BASE_URL=" >> .env
 	echo "CLIENT_ID=" >> .env
 	echo "CLIENT_SECRET=" >> .env
-	echo "CORS_ORIGINS=" >> .env
+	echo "CORS_ORIGINS=#optional, default ORIGIN_WHITELIST" >> .env
 	echo "DISCOVERY_URL=" >> .env
 	echo "ERROR_URL=" >> .env
+	echo "LOG_LEVEL=#optional, default error" >> .env
+	echo "LOG_PRETTY_PRINT=#optional, default false" >> .env
+	echo "ORIGIN_WHITELIST=" >> .env
 	echo "REDIS_URI=" >> .env
 	echo "REDIS_PASSWORD=#optional" >> .env
-	echo "SUCCESSFUL_LOGIN_ORIGIN=" >> .env
-	echo "SUCCESSFUL_LOGIN_PATHNAME_REGEX=# default: \/ aka '/'" >> .env
-	echo "UPSTREAMS=" >> .env
+	echo "SUCCESSFUL_LOGIN_ORIGINS=#optional, default: ORIGIN_WHITELIST" >> .env
+	echo "SUCCESSFUL_LOGIN_PATHNAME_REGEX=#optional, default: \/ aka '/'" >> .env
+	echo "SUCCESSFUL_LOGOUT_ORIGINS=#optional, default: ORIGIN_WHITELIST" >> .env
+	echo "UPSTREAMS=#optional, used if automatic token refresh / cookie to auth header proxy is needed / wanted" >> .env
 	echo "CERTIFICATE_FILE=#optional" >> .env
 	echo "KEY_FILE=#optional" >> .env
 
