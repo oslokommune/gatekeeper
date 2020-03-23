@@ -65,6 +65,8 @@ generate-dotenv-file: ## Generate .env file template
 	echo "BASE_URL=" >> .env
 	echo "CLIENT_ID=" >> .env
 	echo "CLIENT_SECRET=" >> .env
+	echo "TOKEN_COOKIES_SAMESITE=#optional, default strict"
+	echo "TOKEN_COOKIES_SECURE=#optional, default 'true'"
 	echo "CORS_ORIGINS=#optional, default ORIGIN_WHITELIST" >> .env
 	echo "DISCOVERY_URL=" >> .env
 	echo "ERROR_URL=" >> .env
