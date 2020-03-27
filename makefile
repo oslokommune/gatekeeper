@@ -22,12 +22,14 @@ release: build push-image
 deploy-temp:
 	helm --tiller-namespace=developerportal-test --namespace=developerportal-test upgrade \
 		--install \
+		--set app.env[0].name=BASE_URL,app.env[0].value=https://${NAME}-${VERSION}.k8s-test.oslo.kommune.no \
 		--set app.image.tag=${VERSION} \
 		--set app.image.repository=${REPOSITORY}/${NAME} \
 		--set imagePullSecret=regsecret \
 		--set 'ingress.hosts={gatekeeper-${VERSION}.k8s-test.oslo.kommune.no,gatekeeper-${VERSION}.api-test.oslo.kommune.no}' \
 		--values helm-charts/gatekeeper/values-test.yaml \
 		$(NAME)-${VERSION} helm-charts/gatekeeper
+	@echo "⁉️  Remember to add https://${NAME}-${VERSION}.k8s-test.oslo.kommune.no as a legal redirect uri in Keycloak test"
 
 deploy-test:
 	helm --tiller-namespace=developerportal-test --namespace=developerportal-test upgrade \
@@ -63,6 +65,8 @@ generate-dotenv-file: ## Generate .env file template
 	echo "BASE_URL=" >> .env
 	echo "CLIENT_ID=" >> .env
 	echo "CLIENT_SECRET=" >> .env
+	echo "TOKEN_COOKIES_SAMESITE=#optional, default strict"
+	echo "TOKEN_COOKIES_SECURE=#optional, default 'true'"
 	echo "CORS_ORIGINS=#optional, default ORIGIN_WHITELIST" >> .env
 	echo "DISCOVERY_URL=" >> .env
 	echo "ERROR_URL=" >> .env

@@ -5,7 +5,7 @@ const http = require('http')
 const https = require('https')
 
 const { App } = require('./lib/app')
-const log = require('./lib/logging')
+const { log } = require('./lib/logging')
 
 const PORT = 4554
 
