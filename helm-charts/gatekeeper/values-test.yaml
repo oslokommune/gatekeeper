@@ -23,6 +23,8 @@ app:
         secretKeyRef:
           name: gatekeeper-client-secret
           key: password.txt
+    - name: TOKEN_COOKIES_SAMESITE
+      value: none
     - name: DISCOVERY_URL
       value: https://login-test.oslo.kommune.no/auth/realms/api-catalog/.well-known/openid-configuration
     - name: ERROR_URL
