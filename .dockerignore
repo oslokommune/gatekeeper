@@ -1,7 +1,11 @@
 node_modules/
 sslcerts/
+helm-charts/
 .idea/
+.github/
 
 makefile
+README.md
 .env
+.env.*
 .gitignore

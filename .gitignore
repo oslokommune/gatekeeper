@@ -8,3 +8,5 @@
 
 # Sensitive files
 .env*
+*token*
+*secret*
