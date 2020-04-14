@@ -62,7 +62,11 @@ app:
     - name: REDIS_URI
       value: redis://dp-redis:6379
     - name: UPSTREAMS
-      value: api-catalog=https://api-catalog.k8s.oslo.kommune.no;data=https://api.data-dev.oslo.systems;teams=https://devportal-teams.k8s.oslo.kommune.no
+      value: >
+        api-catalog=https://api-catalog.k8s.oslo.kommune.no;
+        dataplatform=https://api.data.oslo.systems;
+        feedback=https://devportal-feedback.k8s.oslo.kommune.no;
+        teams=https://devportal-teams.k8s.oslo.kommune.no;
 
 service:
   type: ClusterIP
