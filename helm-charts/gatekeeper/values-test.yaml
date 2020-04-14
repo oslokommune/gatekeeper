@@ -34,7 +34,11 @@ app:
     - name: REDIS_URI
       value: redis://dp-redis:6379
     - name: UPSTREAMS
-      value: api-catalog=https://api-catalog.k8s-test.oslo.kommune.no;data=https://api.data-dev.oslo.systems;teams=https://devportal-teams.k8s-test.oslo.kommune.no
+      value: >
+        api-catalog=https://api-catalog.k8s-test.oslo.kommune.no;
+        dataplatform=https://api.data-dev.oslo.systems;
+        feedback=https://devportal-feedback.k8s-test.oslo.kommune.no;
+        teams=https://devportal-teams.k8s-test.oslo.kommune.no;
   hosts:
     - gatekeeper.api-test.oslo.kommune.no
     - gatekeeper.k8s-test.oslo.kommune.no
