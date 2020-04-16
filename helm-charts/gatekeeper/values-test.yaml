@@ -33,6 +33,8 @@ app:
       value: https://apis.k8s-test.oslo.kommune.no;http://localhost:3333
     - name: REDIS_URI
       value: redis://dp-redis:6379
+    - name: TOKEN_COOKIES_DOMAIN
+      value: .oslo.kommune.no
     - name: UPSTREAMS
       value: >
         api-catalog=https://api-catalog.k8s-test.oslo.kommune.no;
