@@ -40,7 +40,7 @@ The Gatekeeper is a tool made to simplify authentication against an OAuth2 provi
 
 After the Gatekeeper is configured using a minimalistic set of environment variables, all you need to do is make an anchor tag in your frontend that points to the Gatekeeper's /login endpoint and it will handle the rest. The end result is your frontend having the access token and refresh token set as Secure and HttpOnly cookies. To log out you simply POST to the Gatekeeper's /logout endpoint.
 
-If your backend service expects the access token as an authorization header, you can use the proxy functionality which handles setting the cookie as a header for you. Using the proxy functionality is required for refreshing the tokens for now.
+If your backend service expects the access token as an authorization header, you can use the proxy functionality which handles setting the cookie as an Authorization header for you. The Gatekeeper will handle refreshing of the access token for requests on any of the exposed entrypoints.
 ### Why
 
 * We are currently storing the access token and refresh token in both the local storage of the frontend, and as non-HttpOnly cookies. This is not recommended and is a security risk in the event of a XSS vulnerability.
@@ -119,6 +119,14 @@ npm install
 
 ## Usage
 
+### Docker
+Configure the environment either individually with -e flags to the docker run command, or use 
+an env file with --env-file
+```sh
+docker run -p 4554:4554 docker.pkg.github.com/oslokommune/gatekeeper/gatekeeper:1.0.7
+```
+
+### Local
 1. Generate an env file
 ```sh
 make generate-dotenv-file
@@ -131,4 +139,3 @@ make start-redis
 make run
 ```
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
