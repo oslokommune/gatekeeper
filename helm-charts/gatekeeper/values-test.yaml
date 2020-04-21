@@ -37,10 +37,10 @@ app:
       value: .oslo.kommune.no
     - name: UPSTREAMS
       value: >
-        api-catalog=https://api-catalog.k8s-test.oslo.kommune.no;
+        api-catalog=http://api-catalog-backend.developerportal-test;
         dataplatform=https://api.data-dev.oslo.systems;
-        feedback=https://devportal-feedback.k8s-test.oslo.kommune.no;
-        teams=https://devportal-teams.k8s-test.oslo.kommune.no;
+        feedback=http://feedback.developerportal-test;
+        teams=http://teams.developerportal-test;
   hosts:
     - gatekeeper.api-test.oslo.kommune.no
     - gatekeeper.k8s-test.oslo.kommune.no
