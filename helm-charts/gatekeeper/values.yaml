@@ -65,10 +65,10 @@ app:
       value: .oslo.kommune.no
     - name: UPSTREAMS
       value: >
-        api-catalog=https://api-catalog.k8s.oslo.kommune.no;
+        api-catalog=http://api-catalog-backend.developerportal;
         dataplatform=https://api.data.oslo.systems;
-        feedback=https://devportal-feedback.k8s.oslo.kommune.no;
-        teams=https://devportal-teams.k8s.oslo.kommune.no;
+        feedback=http://feedback.developerportal;
+        teams=http://teams.developerportal;
 
 service:
   type: ClusterIP
