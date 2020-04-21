@@ -27,7 +27,7 @@ spec:
       imagePullSecrets:
         - name: {{ .Values.imagePullSecret }}
       containers:
-        - name: app
+        - name: {{ include "dev-starter.fullname" . }}
           image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
           imagePullPolicy: {{ .Values.app.image.pullPolicy }}
           ports:
