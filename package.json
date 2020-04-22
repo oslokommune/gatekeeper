@@ -2,6 +2,7 @@
   "name": "gatekeeper",
   "version": "1.0.10",
   "description": "handles auth",
+  "license": "MIT",
   "main": "server.js",
   "scripts": {
     "test": "jest"
