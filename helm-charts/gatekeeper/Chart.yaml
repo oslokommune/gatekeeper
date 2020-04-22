@@ -1,4 +1,0 @@
-apiVersion: v1
-description: An OAuth2 OIDC handler for SPA's and static frontends
-name: gatekeeper
-version: 0.1.1
