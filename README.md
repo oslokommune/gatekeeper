@@ -88,7 +88,6 @@ npm install
 <!-- CONFIGURATION -->
 ## Configuration
 
-<!-- When modifying, please modify through https://docs.google.com/spreadsheets/d/10qHJ_p2FOjZ8TcR1JdNqdDZaO21Cm27nCnsMG-_1xPQ/edit#gid=0 -->
 ### Mandatory
 | Variable          | Example                                                                                                                                                              | Description                                                                                            |
 | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
