@@ -29,7 +29,7 @@ jobs:
             BASE_URL=http://localhost:4554
             REDIS_URI=redis://localhost:6379
             UPSTREAMS="test-service=http://localhost:3000"
-            ORIGIN_WHITELIST="http://localhost"
+            ORIGIN_WHITELIST="http://localhost;http://localhost:8080"
             TOKEN_COOKIES_SECURE=false
           EOL
       - run: make run &
