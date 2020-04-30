@@ -1,0 +1,36 @@
+name: Test
+on: push
+
+jobs:
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+
+    services:
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - run: npm ci
+      - run: >
+          cat <<EOL
+            DISCOVERY_URL=${{ secrets.TEST_DISCOVERY_URL }}
+            CLIENT_ID=${{ secrets.TEST_CLIENT_ID }}
+            CLIENT_SECRET=${{ secrets.TEST_CLIENT_SECRET }}
+            TEST_USERNAME=${{ secrets.TEST_USER_NAME }}
+            TEST_PASSWORD=${{ secrets.TEST_USER_PASSWORD }}
+            BASE_URL=http://localhost:4554
+            REDIS_URI=redis://localhost:6379
+            UPSTREAMS="test-service=http://localhost:3000"
+            ORIGIN_WHITELIST="http://localhost:8080"
+            TOKEN_COOKIES_SECURE=false
+          EOL > .env
+      - run: make run &
+      - run: npm test
