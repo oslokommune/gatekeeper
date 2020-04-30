@@ -20,7 +20,7 @@ jobs:
           node-version: '12.x'
       - run: npm ci
       - run: >
-          cat <<EOL
+          cat >.env <<EOL
             DISCOVERY_URL=${{ secrets.TEST_DISCOVERY_URL }}
             CLIENT_ID=${{ secrets.TEST_CLIENT_ID }}
             CLIENT_SECRET=${{ secrets.TEST_CLIENT_SECRET }}
@@ -29,8 +29,8 @@ jobs:
             BASE_URL=http://localhost:4554
             REDIS_URI=redis://localhost:6379
             UPSTREAMS="test-service=http://localhost:3000"
-            ORIGIN_WHITELIST="http://localhost:8080"
+            ORIGIN_WHITELIST="http://localhost"
             TOKEN_COOKIES_SECURE=false
-          EOL > .env
+          EOL
       - run: make run &
       - run: npm test
