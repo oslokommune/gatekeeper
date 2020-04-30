@@ -32,5 +32,6 @@ jobs:
             ORIGIN_WHITELIST="http://localhost;http://localhost:8080"
             TOKEN_COOKIES_SECURE=false
           EOL
-      - run: make run &
+      - run: make run&
+      - run: ps aux | grep server.js
       - run: npm test
