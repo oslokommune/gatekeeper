@@ -1,6 +1,6 @@
 {
   "name": "gatekeeper",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "handles auth",
   "main": "server.js",
   "scripts": {
