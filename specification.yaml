@@ -17,7 +17,7 @@ paths:
       tags:
       - REST
       summary: "Acquire information about the user"
-      description: "Mirrors the authentication providers /userinfo entrypoint. Returns information about the user"
+      description: "Mirrors the authentication provider's /userinfo entrypoint. Returns information about the user"
       parameters:
       - in: "cookie"
         name: "access_token"
@@ -68,7 +68,10 @@ paths:
           "url": {}
       responses:
         302:
-          description: Will redirect the user back to the url specified in the redirect query parameter
+          description: >
+            Will redirect the user to the authentication provider's login form. If the login is
+            successful it will return the user back to the url specified in the redirect query
+            parameter.
 
 components:
   schemas:
