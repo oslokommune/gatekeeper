@@ -75,7 +75,7 @@ To run Gatekeeper locally, follow these steps
 * NPM v6.13.6
 
 ### Installation
- 
+
 1. Clone the repo
 ```sh
 git clone https://github.oslo.kommune.no/origodigi/gatekeeper
@@ -109,6 +109,7 @@ npm install
 | SUCCESSFUL_LOGIN_ORIGINS        | https://awesome.com                                             | ORIGIN_WHITELIST | Whitelisted origin where the client can be redirected to on successful login |
 | SUCCESSFUL_LOGIN_PATHNAME_REGEX | ^article/[0-9]$                                                 | /*               | Whitelisted pathname where the client can be redirected to on successful login |
 | TOKEN_COOKIES_DOMAIN            | .oslo.kommune.no                                                | BASE_URL         | What domain the tokens should be sent to. Useful if running an SSR setup to send tokens to both the Gatekeeper and the SSR server                            |
+| TOKEN_COOKIES_PREFIX            | production_                                                     |                  | Prefix the cookies to prevent name clashes when serving multiple environments on the same domain                           |
 | TOKEN_COOKIES_SAMESITE          | lax                                                             | strict           | Sets the samesite attribute for the access and refresh token cookies |
 | TOKEN_COOKIES_SECURE            | false                                                           | true             | Sets the secure attribute for the access and refresh token cookies. Neat if you are developing locally |
 | UPSTREAMS                       | articles=http://articles.service;writers=http://writers.service |                  | Upstreams to redirect to on /api/*. Gatekeeper will turn a HttpOnly cookie into an Authorization bearer and make sure the token is refreshed when necessary |
@@ -119,7 +120,7 @@ npm install
 ## Usage
 
 ### Docker
-Configure the environment either individually with -e flags to the docker run command, or use 
+Configure the environment either individually with -e flags to the docker run command, or use
 an env file with --env-file
 ```sh
 docker run -p 4554:4554 docker.pkg.github.com/oslokommune/gatekeeper/gatekeeper:1.0.7
@@ -132,7 +133,7 @@ make generate-dotenv-file
 ```
 2. Configure .env file
 
-3. Run the Gatekeeper 
+3. Run the Gatekeeper
 ```sh
 make start-redis
 make run
