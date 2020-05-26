@@ -1,0 +1,85 @@
+openapi: 3.0.3
+info:
+  description: "An OAuth OpenID Connect provider integration as a service"
+  version: "1.0.20"
+  title: "Gatekeeper"
+  contact:
+    name: "Julius Pedersen"
+    email: "developerportal@oslo.kommune.no"
+tags:
+- name: "REST"
+  description: "Entrypoints designed to be used programmatically"
+- name: "redirects"
+  description: "Entrypoints designed to be navigated to"
+paths:
+  /userinfo:
+    get:
+      tags:
+      - REST
+      summary: "Acquire information about the user"
+      description: "Mirrors the authentication provider's /userinfo entrypoint. Returns information about the user"
+      parameters:
+      - in: "cookie"
+        name: "access_token"
+        required: true
+        description: "Access token representing a user session"
+        content:
+          "text": {}
+      responses:
+        200:
+          description: Object containing user info as per result from authentication provider
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserinfoResponse"
+        401:
+          description: "Missing or invalid access token"
+  /logout:
+    post:
+      tags:
+      - REST
+      summary: Terminates a user session
+      description: Used to invalidate a user session
+      parameters:
+      - in: "cookie"
+        name: "access_token"
+        required: true
+        description: "Access token representing a user session"
+        content:
+          "text": {}
+      responses:
+        200:
+          description: "OK"
+        401:
+          description: "No valid session to log out"
+
+  /login:
+    get:
+      tags:
+      - redirects
+      summary: "Initiate a user session"
+      description: "Generates required configuration and redirects to the authentication provider"
+      parameters:
+      - in: query
+        name: redirect
+        required: true
+        description: Full URL to redirect back to on successful login
+        content:
+          "url": {}
+      responses:
+        302:
+          description: >
+            Will redirect the user to the authentication provider's login form. If the login is
+            successful it will return the user back to the url specified in the redirect query
+            parameter.
+
+components:
+  schemas:
+    UserinfoResponse:
+      description: User information as returned by the authentication provider
+      type: object
+      properties:
+        sub:
+          type: string
+        preferredName:
+          type: string
