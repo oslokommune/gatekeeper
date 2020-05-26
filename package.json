@@ -1,6 +1,6 @@
 {
   "name": "gatekeeper",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "handles auth",
   "license": "MIT",
   "main": "server.js",
