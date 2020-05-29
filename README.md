@@ -15,6 +15,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
+  <img width="160" src="https://ok-origo-developer-portal-gatekeeper.s3.eu-north-1.amazonaws.com/gatekeeper-logo-black.svg" />
   <h3 align="center">Gatekeeper</h3>
 
   <p align="center">
