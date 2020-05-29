@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1389px" height="945px" viewBox="0 0 1389 945" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>gatekeeper-logo-white</title>
+    <g id="Map-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="even-less-details" transform="translate(-3918.000000, -1336.000000)" fill="#FFFFFF">
+            <g id="gatekeeper-logo-white" transform="translate(3918.000000, 1336.000000)">
+                <circle id="Oval-Copy-12" cx="514.5" cy="190.5" r="63.5"></circle>
+                <circle id="Oval-Copy-13" cx="694.5" cy="190.5" r="63.5"></circle>
+                <circle id="Oval-Copy-14" cx="874.5" cy="190.5" r="63.5"></circle>
+                <rect id="Rectangle-Copy-17" x="470" y="0" width="89" height="112"></rect>
+                <rect id="Rectangle-Copy-18" x="651" y="0" width="89" height="112"></rect>
+                <rect id="Rectangle-Copy-21" x="829" y="0" width="89" height="112"></rect>
+                <rect id="Rectangle-Copy-22" x="991" y="187" width="161" height="758"></rect>
+                <path d="M1105,114 L1105,191 L1152,191 L1152,261 L991,261 L991,191 L1039,191 L1039,114 L1105,114 Z" id="Combined-Shape-Copy-5"></path>
+                <polygon id="Rectangle-Copy-23" points="1163 325 1191.29572 325 1326.42103 518.688577 1389 518.688577 1389 935 1163 935"></polygon>
+                <rect id="Rectangle-Copy-24" transform="translate(317.500000, 566.000000) scale(-1, 1) translate(-317.500000, -566.000000) " x="237" y="187" width="161" height="758"></rect>
+                <path d="M350,114 L350,191 L398,191 L398,261 L237,261 L237,191 L284,191 L284,114 L350,114 Z" id="Combined-Shape-Copy-6"></path>
+                <rect id="Rectangle-Copy-31" x="397" y="268" width="594" height="57"></rect>
+                <polygon id="Rectangle-Copy-25" transform="translate(113.000000, 630.000000) scale(-1, 1) translate(-113.000000, -630.000000) " points="0 325 28.2957176 325 163.421035 518.688577 226 518.688577 226 935 0 935"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
