@@ -20,9 +20,10 @@ if (process.env.CERTIFICATE_FILE || process.env.KEY_FILE) {
 		const certificate = fs.readFileSync(process.env.CERTIFICATE_FILE, 'utf8')
 
 		credentials = {
-			key: privateKey, cert: certificate
+			key: privateKey,
+			cert: certificate
 		}
-	} catch(error) {
+	} catch (error) {
 		log.error('Unable to read key or certificate')
 		log.error(error)
 
@@ -30,22 +31,19 @@ if (process.env.CERTIFICATE_FILE || process.env.KEY_FILE) {
 	}
 }
 
-App()
-	.then(app => {
-		let server
-		let protocol
+App().then((app) => {
+	let server
+	let protocol
 
-		if (credentials) {
-			protocol = 'https'
-			server = https.createServer(credentials, app)
-		}
-		else {
-			protocol = 'http'
-			server = http.createServer(app)
-		}
+	if (credentials) {
+		protocol = 'https'
+		server = https.createServer(credentials, app)
+	} else {
+		protocol = 'http'
+		server = http.createServer(app)
+	}
 
-		server.listen(PORT, () => {
-			log.verbose(`Listening on ${protocol}://0.0.0.0:${PORT}`)
-		})
+	server.listen(PORT, () => {
+		log.verbose(`Listening on ${protocol}://0.0.0.0:${PORT}`)
 	})
-
+})
