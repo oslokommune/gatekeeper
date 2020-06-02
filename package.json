@@ -1,13 +1,13 @@
 {
   "name": "gatekeeper",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "description": "handles auth",
   "license": "MIT",
   "main": "server.js",
   "scripts": {
     "test": "jest",
-		"lint": "eslint --ext .js .",
-		"lintfix": "eslint --fix --ext .js ."
+    "lint": "eslint --ext .js .",
+    "lintfix": "eslint --fix --ext .js ."
   },
   "dependencies": {
     "axios": "^0.19.2",
