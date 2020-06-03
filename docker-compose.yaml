@@ -1,0 +1,37 @@
+version: '3.7'
+services:
+  redis: # The Gatekeeper requires Redis for horizontal scaling. Making this optional is on the agenda
+    image: redis:alpine
+    ports:
+      - '6379'
+    networks:
+      - exampleapp
+
+  gatekeeper:
+    depends_on:
+      - redis
+    image: docker.pkg.github.com/oslokommune/gatekeeper/gatekeeper:1.0.25
+    networks:
+      - exampleapp
+    ports:
+      - '4554:4554'
+    environment:
+      BASE_URL: http://localhost:4554
+      CLIENT_ID: ${GATEKEEPER_CLIENT_ID}
+      CLIENT_SECRET: ${GATEKEEPER_CLIENT_SECRET}
+      DISCOVERY_URL: ${GATEKEEPER_DISCOVERY_URL}
+      ORIGIN_WHITELIST: 'http://localhost:8080'
+      REDIS_URI: redis://redis:6379
+      TOKEN_COOKIES_SECURE: 'false' # Do not set this in production. This is for developing only.
+      UPSTREAMS: >
+        example=http://example-service:3000
+
+        #example-service:
+        #  image: myimage
+        #  ports:
+        #    - '3000'
+        #  networks:
+        #    - exampleapp
+
+networks:
+  exampleapp:
