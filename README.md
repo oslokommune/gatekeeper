@@ -33,6 +33,9 @@
   * [Installation](#installation)
   * [Configuration](#configuration)
 * [Usage](#usage)
+	* [docker-compose](#docker-compose)
+	* [Docker](#docker)
+	* [Standalone](#standalone)
 
 
 <!-- ABOUT THE PROJECT -->
@@ -44,7 +47,7 @@ After the Gatekeeper is configured using a minimalistic set of environment varia
 If your backend service expects the access token as an authorization header, you can use the proxy functionality which handles setting the cookie as an Authorization header for you. The Gatekeeper will handle refreshing of the access token for requests on any of the exposed entrypoints.
 ### Why
 
-* We are currently storing the access token and refresh token in both the local storage of the frontend, and as non-HttpOnly cookies. This is not recommended and is a security risk in the event of a XSS vulnerability.
+* We were made aware of the bad practice surrounding storing the access token and refresh token in the local storage of the frontend, and as non-HttpOnly cookies. This is not recommended and is a security risk in the event of a XSS vulnerability.
 * In the case of a single page application, the Gatekeeper can handle authentication in a security wise satisfactory way.
 * Authentication is decoupled from the frontend / client which will simplify maintenance and creation of new frontends / clients.
 
@@ -120,14 +123,18 @@ npm install
 
 ## Usage
 
+### docker-compose
+1. Create a .env file and populate it with the variables ```GATEKEEPER_DISCOVERY_URL```, ```GATEKEEPER_CLIENT_ID``` and ```GATEKEEPER_CLIENT_SECRET```
+2. Run ```docker-compose up```
+
 ### Docker
 Configure the environment either individually with -e flags to the docker run command, or use
 an env file with --env-file
 ```sh
-docker run -p 4554:4554 docker.pkg.github.com/oslokommune/gatekeeper/gatekeeper:1.0.7
+docker run -p 4554:4554 docker.pkg.github.com/oslokommune/gatekeeper/gatekeeper:1.0.25
 ```
 
-### Local
+### Standalone
 1. Generate an env file
 ```sh
 make generate-dotenv-file
