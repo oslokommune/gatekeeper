@@ -15,7 +15,7 @@ services:
       - exampleapp
     ports:
       - '4554:4554'
-    environment:
+    environment: # See README.md for documentation and examples
       BASE_URL: http://localhost:4554
       CLIENT_ID: ${GATEKEEPER_CLIENT_ID}
       CLIENT_SECRET: ${GATEKEEPER_CLIENT_SECRET}
@@ -26,12 +26,12 @@ services:
       UPSTREAMS: >
         example=http://example-service:3000
 
-        #example-service:
-        #  image: myimage
-        #  ports:
-        #    - '3000'
-        #  networks:
-        #    - exampleapp
+  #example-service:
+  #  image: myimage
+  #  ports:
+  #    - '3000'
+  #  networks:
+  #    - exampleapp
 
 networks:
   exampleapp:
