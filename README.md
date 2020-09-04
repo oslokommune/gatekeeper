@@ -121,6 +121,9 @@ npm install
 | KEY_FILE                        | /var/keys/server.key                                            |                  | Path to key file in case SSL termination is needed/wanted    |
 <!-- USAGE EXAMPLES -->
 
+### Horizontal Scaling
+To enable horizontal scaling, you need point the gatekeeper(s) to a Redis instance by supplying the REDIS_URI (and optionally REDIS_PASSWORD). 
+
 ## Usage
 
 ### docker-compose
