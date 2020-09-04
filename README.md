@@ -100,7 +100,6 @@ npm install
 | CLIENT_SECRET     | 0aadea6c-9e01-43e9-a584-8bb579f0cc43                                                                                                                                 | Oauth2 Client secret                                                                                   |
 | DISCOVERY_URL     | [https://keycloak.awesome.com/auth/realms/public/.well-known/openid-configuration](https://keycloak.awesome.com/auth/realms/public/.well-known/openid-configuration) | OAuth2 OIDC Discovery URL                                                                              |
 | ORIGIN_WHITELIST  | https://test.awesome.com;http://localhost                                                                                                                            | Legal origins for cors and login redirect. If not specified, each individual origin must be specified. |
-| REDIS_URI         | redis://redis.awesome.com                                                                                                                                            | URI for your Redis instance                                                                            |
 
 ### Optional
 | Variable                        | Example                                                         | Default          | Description                                                  |
@@ -110,6 +109,7 @@ npm install
 | LOG_LEVEL                       | debug                                                           | error            | How verbose logging should be. Log levels can be seen [here](https://github.com/winstonjs/winston#using-logging-levels) |
 | LOG_PRETTY_PRINT                | true                                                            | false            | Pretty print json log output                                 |
 | REDIS_PASSWORD                  | secret                                                          |                  | Password for your Redis instance                             |
+| REDIS_URI												| redis://redis.awesome.com                                       |                  | URI for your Redis instance. Needed for horizontal scaling   |
 | SUCCESSFUL_LOGIN_ORIGINS        | https://awesome.com                                             | ORIGIN_WHITELIST | Whitelisted origin where the client can be redirected to on successful login |
 | SUCCESSFUL_LOGIN_PATHNAME_REGEX | ^article/[0-9]$                                                 | /*               | Whitelisted pathname where the client can be redirected to on successful login |
 | TOKEN_COOKIES_DOMAIN            | .oslo.kommune.no                                                | BASE_URL         | What domain the tokens should be sent to. Useful if running an SSR setup to send tokens to both the Gatekeeper and the SSR server                            |
@@ -121,6 +121,9 @@ npm install
 | KEY_FILE                        | /var/keys/server.key                                            |                  | Path to key file in case SSL termination is needed/wanted    |
 <!-- USAGE EXAMPLES -->
 
+### Horizontal Scaling
+To enable horizontal scaling, you need point the gatekeeper(s) to a Redis instance by supplying the REDIS_URI (and optionally REDIS_PASSWORD). 
+
 ## Usage
 
 ### docker-compose
@@ -131,7 +134,7 @@ npm install
 Configure the environment either individually with -e flags to the docker run command, or use
 an env file with --env-file
 ```sh
-docker run -p 4554:4554 docker.pkg.github.com/oslokommune/gatekeeper/gatekeeper:1.0.25
+docker run -p 4554:4554 docker.pkg.github.com/oslokommune/gatekeeper/gatekeeper:1.0.32
 ```
 
 ### Standalone
@@ -143,7 +146,6 @@ make generate-dotenv-file
 
 3. Run the Gatekeeper
 ```sh
-make start-redis
 make run
 ```
 
