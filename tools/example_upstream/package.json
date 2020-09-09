@@ -1,0 +1,15 @@
+{
+  "name": "example_upstream",
+  "version": "0.0.1",
+  "description": "A service skeleton for quick and easy upstream testing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+		"server": "node index.js"
+  },
+  "author": "Oslo Kommune / Origo / Developer Portal",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
