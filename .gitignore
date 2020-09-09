@@ -1,6 +1,6 @@
 # Folders
 /.idea/
-/node_modules/
+/**/node_modules/
 /sslcerts/
 
 # Auto generated files
