@@ -4,20 +4,16 @@ const fs = require('fs')
 const http = require('http')
 const https = require('https')
 
+const config = require('./lib/config')
 const { App } = require('./lib/app')
 const { log } = require('./lib/logging')
 
-const PORT = 4554
-
 let credentials = null
 
-if (process.env.CERTIFICATE_FILE || process.env.KEY_FILE) {
-	if (!process.env.CERTIFICATE_FILE || !process.env.KEY_FILE)
-		throw new Error('SSL requires both a certificate and a key')
-
+if (config.ssl) {
 	try {
-		const privateKey = fs.readFileSync(process.env.KEY_FILE, 'utf8')
-		const certificate = fs.readFileSync(process.env.CERTIFICATE_FILE, 'utf8')
+		const privateKey = fs.readFileSync(config.key_file, 'utf8')
+		const certificate = fs.readFileSync(config.certificate_file, 'utf8')
 
 		credentials = {
 			key: privateKey,
@@ -43,7 +39,7 @@ App().then((app) => {
 		server = http.createServer(app)
 	}
 
-	server.listen(PORT, () => {
-		log.verbose(`Listening on ${protocol}://0.0.0.0:${PORT}`)
+	server.listen(config.listening_port, () => {
+		log.verbose(`Listening on ${protocol}://0.0.0.0:${config.listening_port}`)
 	})
 })
