@@ -12,23 +12,8 @@ on:
       - 'tools/**'
 
 jobs:
-  bump:
-    name: Bump version
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1 # Fetch code
-        with:
-          ref: ${{ github.ref }}
-      - name: "Automated Version Bump"
-        uses: "phips28/gh-action-bump-version@master"
-        with:
-          tag-prefix: ''
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   test:
     name: Run tests
-    needs: bump
     runs-on: ubuntu-latest
 
     steps:
@@ -40,9 +25,26 @@ jobs:
       - run: npm ci
       - run: npm test
 
+  bump:
+    name: Bump version
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1 # Fetch code
+        with:
+          ref: ${{ github.ref }}
+      - name: "Automated Version Bump"
+        uses: "phips28/gh-action-bump-version@master"
+        with:
+          tag-prefix: ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
   publish:
     name: Publish Docker image
-    needs: test
+    needs: bump
     runs-on: ubuntu-latest
 
     steps:
