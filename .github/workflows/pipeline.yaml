@@ -3,6 +3,13 @@ name: Pipeline
 on:
   push:
     branches: master
+    paths:
+      - '**.js'
+      - 'Dockerfile'
+      - 'package*.json'
+    paths-ignore:
+      - 'assets/**'
+      - 'tools/**'
 
 jobs:
   bump:
