@@ -53,13 +53,14 @@ If your backend service expects the access token as an authorization header, you
 
 ### How
 
+The OpenAPI specification can be viewed [here](https://developer.oslo.kommune.no/katalog/api/136/introduction)
+
 The Gatekeeper exposes following entrypoints:
 
 - /login?redirect= redirects the client to the auth provider's login screen and sets what location to redirect to on a successful login
 - /logout invalidates the refresh token in the auth provider and clears the client's access and refresh tokens from cookies
 - /api/* proxies requests to a configured backend service and sets the access token to a authorization header on the request. This also handles automatically refreshing of the access token. Use the UPSTREAMS environment variable to configure routes.
 - /callback used internally by the Gatekeeper and the authorization provider in the Oauth2 authorization code flow. Ignore this when integrating with the Gatekeeper
-
 
 ### Built With
 
@@ -122,7 +123,7 @@ npm install
 <!-- USAGE EXAMPLES -->
 
 ### Horizontal Scaling
-To enable horizontal scaling, you need point the gatekeeper(s) to a Redis instance by supplying the REDIS_URI (and optionally REDIS_PASSWORD). 
+To enable horizontal scaling, you need point the gatekeeper(s) to a Redis instance by supplying the REDIS_URI (and optionally REDIS_PASSWORD).
 
 ## Usage
 
