@@ -1,6 +1,6 @@
 # Configuring Auth0 for Gatekeeper
 
-## TLDR;
+## TL;DR:
 1. Create a "Regular Web Application"
 2. Add the url of your gatekeeper to "Allowed Callback URLs" and the urls of your frontends to "Allowed Origins (CORS)"
 3. Fetch "Client ID", "Client Secret" and "OpenID Configuration URL" from the Settings tab
