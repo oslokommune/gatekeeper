@@ -14,7 +14,7 @@
 1. Log in to Keycloak and select your realm.
 2. Select "Clients" in the menu on the left and click "Create" in the top right corner of the screen.
 3. Enter a client ID. Note this down, this is the CLIENT_ID. Ensure the Client Protocol is "OpenID Connect".
-4. Click "Save"?.
+4. Click "Save".
 
 #### Configure the client
 1. Log in to Keycloak and select your realm.
