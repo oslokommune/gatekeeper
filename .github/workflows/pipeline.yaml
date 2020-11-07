@@ -4,12 +4,10 @@ on:
   push:
     branches: master
     paths:
-      - '**.js'
-      - 'Dockerfile'
+      - 'server.js'
       - 'package*.json'
-    paths-ignore:
-      - 'assets/**'
-      - 'tools/**'
+      - 'Dockerfile'
+      - 'lib/**.js'
 
 jobs:
   test:
