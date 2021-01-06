@@ -2,7 +2,8 @@ name: Pipeline
 
 on:
   push:
-    branches: master
+    branches:
+      - master
     paths:
       - 'server.js'
       - 'package*.json'
@@ -53,7 +54,7 @@ jobs:
           node-version: '12.x'
       - run: npm ci
 
-      - run: echo "::set-env name=RELEASE_VERSION::$(jq -r .version package.json)"
+      - run: echo "RELEASE_VERSION=$(jq -r .version package.json)" >> $GITHUB_ENV
 
       - name: Publish Docker image
         uses: elgohr/Publish-Docker-Github-Action@2.12
