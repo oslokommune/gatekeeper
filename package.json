@@ -18,16 +18,16 @@
     "express-http-proxy": "1.6.2",
     "express-winston": "4.0.5",
     "nanoid": "3.1.20",
-    "query-string": "6.13.7",
+    "query-string": "6.13.8",
     "redis": "3.0.2",
     "urljoin": "0.1.5",
     "winston": "3.3.3"
   },
   "devDependencies": {
-    "eslint": "7.14.0",
-    "eslint-config-prettier": "6.15.0",
+    "eslint": "7.17.0",
+    "eslint-config-prettier": "7.1.0",
     "eslint-plugin-import": "2.22.1",
-    "eslint-plugin-prettier": "3.2.0",
+    "eslint-plugin-prettier": "3.3.1",
     "jest": "26.6.3",
     "nodemon": "2.0.6",
     "prettier": "2.2.1"
