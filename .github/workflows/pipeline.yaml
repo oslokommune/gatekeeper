@@ -1,6 +1,7 @@
 name: Pipeline
 
 on:
+  repository_dispatch: {}
   push:
     branches:
       - master
@@ -60,8 +61,8 @@ jobs:
         uses: elgohr/Publish-Docker-Github-Action@2.12
         with:
           # The name of the image you would like to push
-          name: oslokommune/gatekeeper/gatekeeper
+          name: oslokommune/gatekeeper
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          registry: docker.pkg.github.com
+          registry: ghcr.io
           tags: latest,${{ env.RELEASE_VERSION }}
