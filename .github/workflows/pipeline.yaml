@@ -51,11 +51,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 12
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-      - run: npm ci
 
       - run: echo "image_registry=ghcr.io/oslokommune" >> $GITHUB_ENV
       - run: echo "image_name=gatekeeper" >> $GITHUB_ENV
