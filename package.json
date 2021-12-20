@@ -1,35 +1,35 @@
 {
-  "name": "gatekeeper",
-  "version": "1.0.46",
-  "description": "handles auth",
-  "license": "MIT",
-  "main": "server.js",
-  "scripts": {
-    "test": "jest",
-    "lint": "eslint --ext .js .",
-    "lintfix": "eslint --fix --ext .js ."
-  },
-  "dependencies": {
-    "axios": "0.21.1",
-    "cookie-parser": "1.4.5",
-    "cors": "2.8.5",
-    "dotenv": "10.0.0",
-    "express": "4.17.1",
-    "express-http-proxy": "1.6.2",
-    "express-winston": "4.1.0",
-    "nanoid": "3.1.23",
-    "query-string": "7.0.0",
-    "redis": "3.1.2",
-    "urljoin": "0.1.5",
-    "winston": "3.3.3"
-  },
-  "devDependencies": {
-    "eslint": "7.28.0",
-    "eslint-config-prettier": "8.3.0",
-    "eslint-plugin-import": "2.23.4",
-    "eslint-plugin-prettier": "3.4.0",
-    "jest": "27.0.4",
-    "nodemon": "2.0.7",
-    "prettier": "2.3.1"
-  }
+	"name": "gatekeeper",
+	"version": "1.0.46",
+	"description": "handles auth",
+	"license": "MIT",
+	"main": "server.js",
+	"scripts": {
+		"test": "jest",
+		"lint": "eslint --ext .js .",
+		"lintfix": "eslint --fix --ext .js ."
+	},
+	"dependencies": {
+		"axios": "0.24.0",
+		"cookie-parser": "1.4.6",
+		"cors": "2.8.5",
+		"dotenv": "10.0.0",
+		"express": "4.17.2",
+		"express-http-proxy": "1.6.3",
+		"express-winston": "4.2.0",
+		"nanoid": "3.1.30",
+		"query-string": "7.0.1",
+		"redis": "3.1.2",
+		"urljoin": "0.1.5",
+		"winston": "3.3.3"
+	},
+	"devDependencies": {
+		"eslint": "7.28.0",
+		"eslint-config-prettier": "8.3.0",
+		"eslint-plugin-import": "2.23.4",
+		"eslint-plugin-prettier": "3.4.0",
+		"jest": "27.0.4",
+		"nodemon": "2.0.7",
+		"prettier": "2.3.1"
+	}
 }
