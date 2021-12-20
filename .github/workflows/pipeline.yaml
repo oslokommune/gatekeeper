@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1 # Fetch code
+      - uses: actions/checkout@v2 # Fetch code
         with:
           ref: ${{ github.ref }}
       - name: "Automated Version Bump"
