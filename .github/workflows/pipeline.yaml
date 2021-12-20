@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - master
+      - fix-broken-pipeline #TODO: remove
     paths:
       - 'server.js'
       - 'package*.json'
@@ -25,13 +26,14 @@ jobs:
       - run: npm ci
       - run: npm test
 
+
   bump:
     name: Bump version
     needs: test
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2 # Fetch code
+      - uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
       - name: "Automated Version Bump"
@@ -55,14 +57,20 @@ jobs:
           node-version: '12.x'
       - run: npm ci
 
-      - run: echo "RELEASE_VERSION=$(jq -r .version package.json)" >> $GITHUB_ENV
+      - run: echo "image_registry=ghcr.io/oslokommune" >> $GITHUB_ENV
+      - run: echo "image_name=gatekeeper" >> $GITHUB_ENV
+      - run: echo "image_version=$(jq -r .version package.json)" >> $GITHUB_ENV
+      - run: echo "image_uri=${{ env.image_registry }}/${{ env.image_name }}:${{ env.image_version }}" >> $GITHUB_ENV
 
-      - name: Publish Docker image
-        uses: elgohr/Publish-Docker-Github-Action@2.12
+      - name: Login to GitHub Packages Docker Registry
+        uses: docker/login-action@v1
         with:
-          # The name of the image you would like to push
-          name: oslokommune/gatekeeper
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
-          tags: latest,${{ env.RELEASE_VERSION }}
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker image
+        run: docker build --tag ${{ env.image_uri }} .
+
+      - name: Push Docker image
+        run: docker push ${{ env.image_uri }}
